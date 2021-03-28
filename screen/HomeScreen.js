@@ -5,8 +5,6 @@ import { FIREBASE_APP } from "../value";
 import {StyleSheet, View} from 'react-native'
 import styled from 'styled-components/native'
 
-
-
 function HomeScreen() {
 
     // const currentUser = useAuthentication();
@@ -20,27 +18,6 @@ function HomeScreen() {
       // save data
       
     },);
-
-  
-    // return (
-    //   <View style={styles.container}>
-    //     <StyledButton onPress={() => getRandomNumber()}>
-    //       <StyledText>Get a new random number</StyledText>
-    //     </StyledButton>
-  
-    //     <StyledRandomText>{numbers[0]}</StyledRandomText>
-  
-    //     <StyledPreviousResults>
-    //       <StyledRandomText>Previous Numbers</StyledRandomText>
-  
-    //       {numbers.slice(0, 10).map((n, index) => (
-    //         <Text key={index}>{n}</Text>
-    //       ))}
-    //     </StyledPreviousResults>
-  
-    //     <StatusBar style="auto" />
-    //   </View>
-    // );
 
 
 const StyledText = styled.Text`
