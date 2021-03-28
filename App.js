@@ -1,13 +1,54 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Button, Text, View } from 'react-native';
+import firebase from "firebase";
+import "./firebase";
+import { FIREBASE_APP } from "./value";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NavigationContainer } from "@react-navigation/native";
+import HomeScreen from "./screen/HomeScreen";
+import NoteScreen from "./screen/NoteScreen";
+import styled from "styled-components/native";
+
+const Tab = createBottomTabNavigator();
 
 export default function App() {
+
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  useEffect(() => {
+    const app = firebase.app(FIREBASE_APP);
+
+    console.log(app.name)
+    firebase
+      .auth(app)
+      .signInAnonymously()
+      .then(() => {
+        setIsAuthenticated(true);
+      });
+  }, []);
+
+  if (!isAuthenticated) {
+    return null;
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Tab.Navigator
+        initialRouteName={"Home"}
+        tabBarOptions={{
+          activeTintColor: "orange",
+          inactiveTintColor: "white",
+          style: { backgroundColor: "#121212", borderTopColor: "#121212" },
+          labelStyle: {
+            fontSize: 10,
+            fontWeight: "bold",
+          },
+        }}
+      >
+        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="NotePad" component={NoteScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 }
 
