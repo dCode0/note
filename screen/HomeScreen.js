@@ -44,23 +44,21 @@ function HomeScreen() {
 
 
 const StyledText = styled.Text`
-margin-top: 200px;
-color: black;
+color: orange;
 text-align: center;
 font-weight: bold;
 font-size: 18px;
-align-items: center;
 `;
 
-    return <View><StyledText>Get started</StyledText></View>
+    return <View style={styles.container}><StyledText>Get started</StyledText></View>
   }
   
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: "#fff",
+      backgroundColor: "black",
       alignItems: "center",
-      justifyContent: "space-evenly",
+      justifyContent: "center",
     },
   });
   
