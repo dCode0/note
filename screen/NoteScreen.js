@@ -4,6 +4,7 @@ import styled from "styled-components/native";
 import firestore from "../storage/firestore";
 import dayjs from "dayjs";
 import useAuthentication from "../api/useAuthentication";
+import { useEffect } from 'react';
 
 
 const StyledButton = styled.TouchableOpacity`
@@ -48,11 +49,20 @@ const StyledContainer = styled.View`
   background-color: grey;
 `;
 
-const NotePadView = () => {
+const NotePadView = ({navigation, route}) => {
 
     const [text, setText] = React.useState(null);
-    const [characters, setCharacters] = React.useState(null);
+    const [content, setContent] = React.useState(null);
     const currentUser = useAuthentication();
+
+    const {title, characters: characters_} = route.params || {}
+
+    useEffect(()=> {
+        if (title && characters_) {
+            setText(title)
+            setContent(characters_)
+        }
+    }, [title, characters_])
 
     const handleSave = (title, content) => {
         if (currentUser) {
@@ -71,7 +81,7 @@ const NotePadView = () => {
      const clear = () => {
         // return the initial state
         setText("")
-        setCharacters("")
+        setContent("")
             // React.useState(null)
       };
 
@@ -91,15 +101,15 @@ const NotePadView = () => {
 
        <TextInput
             style={styles.input}
-            onChangeText={setCharacters}
-            value={characters}
+            onChangeText={setContent}
+            value={content}
             placeholder="Start typing...."
             placeholderTextColor="orange"
             autoCapitalize='sentences'
             multiline={true} 
         />
 
-        <StyledButton onPress={()=>handleSave(text, characters)}>
+        <StyledButton onPress={()=>handleSave(text, content)}>
         <Text style={styles.baseText}>
         Save
         </Text>

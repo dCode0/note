@@ -25,9 +25,10 @@ const StyledContainer = styled.View`
   padding: 20px 15px 15px 0;
   margin-top: 25px;
   align-items: center;
+  background-color: grey;
 `;
 
-const StyledHistoryItem = styled.View`
+const StyledHistoryItem = styled.TouchableOpacity`
   margin: 10px;
   background-color: #262626;
   padding: 8px;
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const HistoryList = ({ notesHistory, title = "History" }) => {
+const HistoryList = ({ notesHistory, title = "History", onSelect = ()=>{} }) => {
   return (
     <StyledView>
       <StyledContainer>
@@ -52,9 +53,9 @@ const HistoryList = ({ notesHistory, title = "History" }) => {
           keyExtractor={(_, index) => String(index)}
           data={notesHistory}
           renderItem={({ item, index }) => (
-            <StyledHistoryItem key={index}>
+            <StyledHistoryItem key={index} onPress={()=>onSelect(item)}>
               <StyledText>Note: {item.title}</StyledText>
-              <StyledText>Note: {item.characters}</StyledText>
+              <StyledText>Content: {item.characters}</StyledText>
               <StyledText>Date: {dayjs.unix(item.timestamp).format("MMMM DD, YYYY HH:mm")}</StyledText>
             </StyledHistoryItem>
           )}

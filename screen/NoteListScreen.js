@@ -37,8 +37,9 @@ const NoteList = ({
 
   return (
     <HistoryList
+    onSelect={note => navigation.navigate("Note Pad", note)}
     notesHistory={notesHistory}
-      title={"Cloud History"}
+      title={"Notes"}
     />
   );
 };
