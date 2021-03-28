@@ -8,6 +8,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import HomeScreen from "./screen/HomeScreen";
 import NoteScreen from "./screen/NoteScreen";
+import NoteListScreen from "./screen/NoteListScreen";
 import styled from "styled-components/native";
 
 const Tab = createBottomTabNavigator();
@@ -46,7 +47,8 @@ export default function App() {
         }}
       >
         <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="NotePad" component={NoteScreen} />
+        <Tab.Screen name="Note Pad" component={NoteScreen} />
+        <Tab.Screen name="Note List" component={NoteListScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );
