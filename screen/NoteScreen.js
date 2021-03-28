@@ -1,6 +1,9 @@
-import React from "react";
-import { FlatList, StyleSheet, TextInput } from "react-native";
+import React, { useState } from 'react';
+import { Button, FlatList, StyleSheet, TextInput, Text } from "react-native";
 import styled from "styled-components/native";
+import firestore from "../storage/firestore";
+import dayjs from "dayjs";
+import useAuthentication from "../api/useAuthentication";
 
 const StyledView = styled.View`
     flex: 1;
@@ -31,8 +34,30 @@ const StyledContainer = styled.View`
 
 const NotePadView = () => {
 
-    const [text, onChangeText] = React.useState(null);
-    const [characters, onChangeCharacters] = React.useState(null);
+    const [text, setText] = React.useState(null);
+    const [characters, setCharacters] = React.useState(null);
+    const currentUser = useAuthentication();
+
+    const handleSave = (title, content) => {
+        if (currentUser) {
+            firestore.setItem({
+                title,
+                characters: content,
+                timestamp: dayjs().unix(),
+                userId: currentUser.uid
+            }).then(()=>{
+                
+            })
+        }
+        
+      };
+
+     const clear = () => {
+        // return the initial state
+        setText("")
+        setCharacters("")
+            // React.useState(null)
+      };
 
   return (
     <StyledView>
@@ -40,52 +65,29 @@ const NotePadView = () => {
         <StyledTitle>NotePad</StyledTitle>
 
         <TextInput
-        style={styles.title}
-        onChangeText={onChangeText}
-        value={text}
-        placeholder="Title your note"
-        autoCapitalize='sentences'
-        
-      />
+            style={styles.title}
+            onChangeText={setText}
+            value={text}
+            placeholder="Title your note"
+            autoCapitalize='sentences'
+        />
 
        <TextInput
-        style={styles.input}
-        onChangeCharacters={onChangeCharacters}
-        value={characters}
-        placeholder="Start typing...."
-        autoCapitalize='sentences'
-        multiline={true}
-      />
-
-        <FlatList
-          style={styles.flatList}
-          keyExtractor={(_, index) => String(index)}
-          data={[]}
-          renderItem={({ item, index }) => (
-            <StyledNotePadItem key={index}>
-              <StyledText>NotePad: {item.equation}</StyledText>
-            </StyledNotePadItem>
-          )}
+            style={styles.input}
+            onChangeText={setCharacters}
+            value={characters}
+            placeholder="Start typing...."
+            autoCapitalize='sentences'
+            multiline={true}
         />
+
+        <Button style={styles.button} onPress={()=>handleSave(text, characters)} title="Save"> </Button>
+        <Button onPress={()=>clear()} title="New note"> </Button>
       </StyledContainer>
     </StyledView>
   );
 };
 
-// const styles = StyleSheet.create({
-//   flatList: {
-//     padding: 5,
-//     borderRadius: 5,
-//     width: "100%",
-//   },
-// });
-
-// const styles = StyleSheet.create({
-//     input: {
-//       height: 40,
-//       margin: 12,
-//     },
-//   });
   
 const styles = StyleSheet.create({
 
@@ -112,7 +114,22 @@ const styles = StyleSheet.create({
         height: 500,
         width: 300,
         borderColor: "black",
+      },
+      button: {
+        alignItems: "center",
+        backgroundColor: "black",
+        padding: 10
       }
-  })
+    })
+
+const StyledButton = styled.TouchableOpacity`
+    border-radius: 20px;
+    width: 50%;
+    font-size: 35px;
+    background-color: black;
+    padding: 5px;
+   
+  `;
+
 
 export default NotePadView;

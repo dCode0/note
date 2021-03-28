@@ -17,7 +17,6 @@ class Firestore {
     return firestore(app)
       .collection(this.key)
       .where("userId", "==", userId)
-      .orderBy("timestamp", "desc")
       .get();
   }
 
