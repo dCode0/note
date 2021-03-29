@@ -7,19 +7,6 @@ import styled from 'styled-components/native'
 
 function HomeScreen() {
 
-    // const currentUser = useAuthentication();
-  
-    useEffect(() => {
-      //   load data
-    
-    }, []);
-  
-    useEffect(() => {
-      // save data
-      
-    },);
-
-
 const StyledText = styled.Text`
 color: orange;
 text-align: center;

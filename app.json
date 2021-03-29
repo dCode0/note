@@ -27,6 +27,8 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "Note taking application",
+    "githubUrl": "https://github.com/dCode0/note.git"
   }
 }
